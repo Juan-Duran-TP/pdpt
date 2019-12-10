@@ -12,10 +12,10 @@ function App() {
       <Main/>
 
 
-      <Employee
+      {/* <Employee
         name="Bob"
         date={time}
-      />
+      /> */}
     </div>
   );
 }

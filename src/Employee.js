@@ -1,5 +1,11 @@
 import React from 'react';
 import './employee.css'
+import e1 from "./images/tylerdriver.jpg";
+import e2 from "./images/juanduran.jpg";
+import e3 from "./images/cjellis.jpg";
+import e4 from "./images/scottyfulton.jpg";
+import e5 from "./images/donnewman.jpg";
+
 
 class Employee extends React.Component {
     constructor(props) {
@@ -44,37 +50,38 @@ return
 }
 
 const date = (new Date()).toUTCString()+'-6';
+const location = "Classroom 1";
 //Temporarily store data here
 const employees = [
     {
-      //"category": "News",
-      "name": "Juan Duran",
-      "lastLogged": date
-      //"image": "https://source.unsplash.com/user/erondu/600x400"
-    },
-    {
-        //"category": "News",
         "name": "Tyler Driver",
+        "location": location,
         "lastLogged": date,
-        //"image": "https://source.unsplash.com/user/erondu/600x400"
+        "image": e1
     },
     {
-      //"category": "Travel",
+      "name": "Juan Duran",
+      "location": location,
+      "lastLogged": date,
+      "image": e2
+    },
+    {
       "name": "CJ Ellis",
+      "location": location,
       "lastLogged": date,
-      //"image": "https://source.unsplash.com/user/_vickyreyes/600x400"
+      "image": e3
     },
     {
-      //"category": "Development",
       "name": "Scotty Fulton",
+      "location": location,
       "lastLogged": date,
-      //"image": "https://source.unsplash.com/user/ilyapavlov/600x400"
+      "image": e4
     },
     {
-      //"category": "Travel",
       "name": "Don Newman",
+      "location": location,
       "lastLogged": date,
-      //"image": "https://source.unsplash.com/user/_vickyreyes/600x400"
+      "image": e5
     }
 ]
   
@@ -144,14 +151,9 @@ class Button extends React.Component {
   
   class CardHeader extends React.Component {
     render() {
-      const { image, category } = this.props;
-      var style = { 
-          backgroundImage: 'url(' + image + ')',
-      };
+      const { image} = this.props;
       return (
-        <header style={style} className="card-header">
-          <h4 className="card-header--title">{category}</h4>
-        </header>
+        <img src={image} className="headshot" />
       )
     }
   }
@@ -161,11 +163,14 @@ class Button extends React.Component {
     render() {
       return (
         <div className="card-body">
-          <p className="date">March 20 2015</p>
           
-          <h2>{this.props.name}</h2>
+        <h2>{this.props.name}</h2>
           
-          <p className="body-content">{this.props.lastLogged}</p>
+        <p className="body-content">
+            Last Recorded Location: {this.props.location}
+            <br/>
+            {this.props.lastLogged}
+        </p>
           
           <Button />
         </div>
@@ -179,7 +184,7 @@ class Button extends React.Component {
       return (
         <article className="card">
           <CardHeader category={this.props.details.category} image={this.props.details.image}/>
-          <CardBody name={this.props.details.name} lastLogged={this.props.details.lastLogged}/>
+          <CardBody name={this.props.details.name} lastLogged={this.props.details.lastLogged} location={this.props.details.location}/>
         </article>
       )
     }
