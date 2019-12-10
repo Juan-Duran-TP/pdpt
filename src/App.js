@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Employee from './dbPull.js';
+import {Employee, Main} from './Employee.js';
 
 function App() {
+  let time = (new Date()).toUTCString()+'-6';
+  console.log("start:",time);
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
-      <Employee />
+      <Main/>
+
+
+      <Employee
+        name="Bob"
+        date={time}
+      />
     </div>
   );
 }
