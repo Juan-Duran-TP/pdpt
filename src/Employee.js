@@ -1,10 +1,16 @@
 import React from 'react';
+import moment from 'moment';
 import './employee.css'
-import e1 from "./images/tylerdriver.jpg";
-import e2 from "./images/juanduran.jpg";
-import e3 from "./images/cjellis.jpg";
-import e4 from "./images/scottyfulton.jpg";
-import e5 from "./images/donnewman.jpg";
+import e0 from "./images/dannybetancourt.jpg";
+import e1 from "./images/rupeshbista.jpg";
+import e2 from "./images/tylerdriver.jpg";
+import e3 from "./images/juanduran.jpg";
+import e4 from "./images/cjellis.jpg";
+import e5 from "./images/scottyfulton.jpg";
+import e6 from "./images/donnewman.jpg";
+import e7 from "./images/johnphang.jpg";
+import e8 from "./images/ivanrincon.jpg";
+import e9 from "./images/trevortaylor.jpg";
 
 
 class Employee extends React.Component {
@@ -40,48 +46,94 @@ class Employee extends React.Component {
         );
     }
 }
-  
-function readFile() {
+ 
 
+
+
+function readFile() {
+  
     let date = (new Date()).toUTCString()+'-6';
     console.log(date);
 
 return 
 }
 
-const date = (new Date()).toUTCString()+'-6';
+const date = moment().format('MMMM Do YYYY, h:mm:ss a');//(new Date()).toUTCString()+'-6';
 const location = "Classroom 1";
 //Temporarily store data here
+let empStatus = [0,1,2,1,1,1,1,1,1,1];
+
 const employees = [
+    {
+        "name": "Danny Betancourt",
+        "location": location,
+        "lastLogged": date,
+        "image": e0,
+        "status": empStatus[0],
+    },
+    {
+        "name": "Rupesh Bista",
+        "location": location,
+        "lastLogged": date,
+        "image": e1,
+        "status": empStatus[1],
+    },
     {
         "name": "Tyler Driver",
         "location": location,
         "lastLogged": date,
-        "image": e1
+        "image": e2,
+        "status": empStatus[2],
     },
     {
       "name": "Juan Duran",
       "location": location,
       "lastLogged": date,
-      "image": e2
+      "image": e3,
+      "status": empStatus[3],
     },
     {
       "name": "CJ Ellis",
       "location": location,
       "lastLogged": date,
-      "image": e3
+      "image": e4,
+      "status": empStatus[4],
     },
     {
       "name": "Scotty Fulton",
       "location": location,
       "lastLogged": date,
-      "image": e4
+      "image": e5,
+      "status": empStatus[5],
     },
     {
       "name": "Don Newman",
       "location": location,
       "lastLogged": date,
-      "image": e5
+      "image": e6,
+      "status": empStatus[6],
+    },
+    {
+        "name": "John Phang",
+        "location": location,
+        "lastLogged": date,
+        "image": e7,
+        "status": empStatus[7],
+    },
+      
+    {
+        "name": "Ivan Rincon",
+        "location": location,
+        "lastLogged": date,
+        "image": e8,
+        "status": empStatus[8],
+    },
+    {
+        "name": "Trevor Taylor",
+        "location": location,
+        "lastLogged": date,
+        "image": e9,
+        "status": empStatus[9],
     }
 ]
   
@@ -119,32 +171,83 @@ class Main extends React.Component {
 class Button extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {isSafe: true};
-        this.state = {isDeclared: false};
-        this.state = {status: "Undeclared"}
-        // This binding is necessary to make `this` work in the callback
+        
+        this.state = {isSafe: true, isDeclared: false, statusText: "Undeclared" , status: this.props.status, style: {backgroundColor: '#f5f5dc',color: 'black'}}
+        
         this.handleClick = this.handleClick.bind(this);
+        this.serverPost = this.serverPost.bind(this);
+    }
+
+    componentDidMount(){
+      switch (this.state.status){
+        case 0:
+            this.setState({
+              statusText: "Undeclared"
+            });
+            break;
+        case 1:
+            this.setState({
+              statusText: "At Risk",
+              style: {backgroundColor: '#a1273b',color: 'white'}
+            });
+            break;
+        case 2:
+            this.setState({
+              statusText: "Safe",
+              style: {backgroundColor: '#4CAF50',color: 'white'}
+            });
+            break;
+        default:
+          console.log('should not be here')
+    }
     }
   
     handleClick() {
-        if (this.state.isDeclared){
-            this.setState(state => ({
-                isDeclared: true
-            }));
-            
-        }
-        this.setState(state => ({
-            isSafe: !state.isSafe,
-            status: state.isSafe ? 'Safe' : 'At Risk'
-        }));
+       
+        switch (this.state.status + 1){
+          case 0:
+              this.setState({
+                statusText: "Undeclared",
+                status: 0
+              });
+              break;
+          case 1:
+              this.setState({
+                statusText: "At Risk",
+                style: {backgroundColor: '#a1273b',color: 'white'},
+                status: 1
+              });
+              break;
+          case 2:
+              this.setState({
+                statusText: "Safe",
+                style: {backgroundColor: '#4CAF50',color: 'white'},
+                status: 2
+              });
+              break;
+          default:
+            this.setState({
+              statusText: "At Risk",
+              style: {backgroundColor: '#a1273b',color: 'white'},
+              status: 1
+            });
+            break;
+      }
+      this.serverPost();
+
+    }
+
+    serverPost(){
+      console.log(this.props.index, (this.state.status)%2 +1)
+
     }
   
     render() {
-        return (
-            <button className="safetyButton" onClick={this.handleClick}>
-                    {this.state.status}
-            </button>
-        );
+      return (
+        <button className="safetyButton" onClick={this.handleClick} style={this.state.style}>
+          {this.state.statusText}
+        </button>
+      );
     }
 }
   
@@ -171,8 +274,7 @@ class Button extends React.Component {
             <br/>
             {this.props.lastLogged}
         </p>
-          
-          <Button />
+        <Button index={this.props.index} status ={this.props.status} />
         </div>
       )
     }
@@ -184,7 +286,7 @@ class Button extends React.Component {
       return (
         <article className="card">
           <CardHeader category={this.props.details.category} image={this.props.details.image}/>
-          <CardBody name={this.props.details.name} lastLogged={this.props.details.lastLogged} location={this.props.details.location}/>
+          <CardBody index={this.props.index} name={this.props.details.name} lastLogged={this.props.details.lastLogged} status={this.props.details.status} location={this.props.details.location}/>
         </article>
       )
     }
