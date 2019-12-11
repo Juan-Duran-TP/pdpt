@@ -9,8 +9,6 @@ import {
 } from "react-router-dom";
 
 function App() {
-  let time = (new Date()).toUTCString()+'-6';
-  console.log("start:",time);
   return (
     <Router>
       <div className="App">
@@ -20,23 +18,23 @@ function App() {
               <Link to="/" className="whiteLink">Home</Link>
             </li>
             <li>
-              <Link to="/log-in" className="whiteLink">Log-in</Link>
+              <Link to="/safetyofficer" className="whiteLink">Safety Officer</Link>
             </li>
             <li>
-              <Link to="/about" className="whiteLink">About</Link>
+              <Link to="/employee" className="whiteLink">Employee</Link>
             </li>
           </ul>
         </nav>
 
         <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/log-in">
+          <Route path="/safetyofficer">
             <Main />
           </Route>
+          <Route path="/employee">
+            <Employee id={3}/>
+          </Route>
           <Route path="/">
-            <Employee />
+            <About />
           </Route>
         </Switch>
 
@@ -46,13 +44,16 @@ function App() {
 }
 function About() {
   return (
-    <div>
-      <h2>About</h2>
+    <div className="About">
+      <h2 className="PDPT">Post Disaster Personnel Tracker</h2>
       <p>
-        In my free time I enjoy playing the Star Wars Roleplaying Game. I am my group's game master and for our most recent campaign
-                  we've had a consistent session every other week for the past three months. In addition to this, I also play Star Wars Armada,
-                  a  Star Wars tabletop game, with the local Houston area group every week. This has been a more recent hobby I've acquired
-                  and I'm aspiring to qualify for the international championships.
+        Post Disaster Personnel Tracker (PDPT) is a service that aims to provide
+        a way to account for the safety status and location of employees following
+        some kind of emergency or disaster. Location and time is tracked via Bluetooth
+        proximity sensing from Raspberry Pis located around the facility while safety
+        status is either self-declared or declared by corresponding safety officers
+        (fire wardens, managers, etc).
+
       </p>
 
     </div>

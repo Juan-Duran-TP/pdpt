@@ -11,135 +11,45 @@ import e6 from "./images/donnewman.jpg";
 import e7 from "./images/johnphang.jpg";
 import e8 from "./images/ivanrincon.jpg";
 import e9 from "./images/trevortaylor.jpg";
-
-
-class Employee extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {isSafe: true};
-        this.state = {isDeclared: false};
-    
-        // This binding is necessary to make `this` work in the callback
-        this.handleClick = this.handleClick.bind(this);
-    }
-  
-    handleClick() {
-        this.setState(state => ({
-            isSafe: !state.isSafe
-        }));
-        readFile();
-    }
-  
-    render() {
-        return (
-            <>  
-                <p className="name">
-                    {this.props.name}
-                </p>
-                <button className="safetybutton" onClick={this.handleClick}>
-                    {this.state.isSafe ? 'Safe' : 'Unsafe'}
-                </button>
-                <p className="timeStamp">
-                    Last logged time: {this.props.date}
-                </p>
-            </>
-        );
-    }
-}
- 
+import sender from "./sender.js";
+import receiver from "./test.js";
+const http = require('http');
 
 
 
-function readFile() {
-  
-    let date = (new Date()).toUTCString()+'-6';
-    console.log(date);
+console.log("start");
 
-return 
-}
+let empStatus = [];
 
-const date = moment().format('MMMM Do YYYY, h:mm:ss a');//(new Date()).toUTCString()+'-6';
+const date = moment().format('MMMM Do YYYY, h:mm a');//(new Date()).toUTCString()+'-6';
 const location = "Classroom 1";
-//Temporarily store data here
-let empStatus = [0,1,2,1,1,1,1,1,1,1];
-
-const employees = [
-    {
-        "name": "Danny Betancourt",
-        "location": location,
-        "lastLogged": date,
-        "image": e0,
-        "status": empStatus[0],
-    },
-    {
-        "name": "Rupesh Bista",
-        "location": location,
-        "lastLogged": date,
-        "image": e1,
-        "status": empStatus[1],
-    },
-    {
-        "name": "Tyler Driver",
-        "location": location,
-        "lastLogged": date,
-        "image": e2,
-        "status": empStatus[2],
-    },
-    {
-      "name": "Juan Duran",
-      "location": location,
-      "lastLogged": date,
-      "image": e3,
-      "status": empStatus[3],
-    },
-    {
-      "name": "CJ Ellis",
-      "location": location,
-      "lastLogged": date,
-      "image": e4,
-      "status": empStatus[4],
-    },
-    {
-      "name": "Scotty Fulton",
-      "location": location,
-      "lastLogged": date,
-      "image": e5,
-      "status": empStatus[5],
-    },
-    {
-      "name": "Don Newman",
-      "location": location,
-      "lastLogged": date,
-      "image": e6,
-      "status": empStatus[6],
-    },
-    {
-        "name": "John Phang",
-        "location": location,
-        "lastLogged": date,
-        "image": e7,
-        "status": empStatus[7],
-    },
-      
-    {
-        "name": "Ivan Rincon",
-        "location": location,
-        "lastLogged": date,
-        "image": e8,
-        "status": empStatus[8],
-    },
-    {
-        "name": "Trevor Taylor",
-        "location": location,
-        "lastLogged": date,
-        "image": e9,
-        "status": empStatus[9],
-    }
-]
+let employees = []
   
   
   // Start App
-  
+
+class Employee extends React.Component {
+  constructor(props) {
+      super(props);
+      this.state = { employee:{}}
+  }
+  componentWillMount() {
+    this.setState({
+      employee: employees[this.props.id]
+    });
+  }
+
+  render() {
+    return (
+        <>  
+          <Card key={this.props.id} index={this.props.id} details={this.state.employee}/>
+        </>
+    );
+  }
+}
+
+
+
 class Main extends React.Component { 
     constructor() {
       super();
@@ -152,6 +62,99 @@ class Main extends React.Component {
       this.setState({
         posts: employees
       });
+    }
+    componentDidMount() {
+      
+      http.get('http://localhost:3001/emp', (resp) => {
+      let data = '';
+      resp.on('data', (chunk) => {
+        data += chunk;
+      });
+      resp.on('end', () => {
+        console.log(JSON.parse(data));
+        empStatus = JSON.parse(data);
+        employees = [
+          {
+              "name": "Danny Betancourt",
+              "location": location,
+              "lastLogged": date,
+              "image": e0,
+              "status": empStatus[0],
+          },
+          {
+              "name": "Rupesh Bista",
+              "location": location,
+              "lastLogged": date,
+              "image": e1,
+              "status": empStatus[1],
+          },
+          {
+              "name": "Tyler Driver",
+              "location": location,
+              "lastLogged": date,
+              "image": e2,
+              "status": empStatus[2],
+          },
+          {
+            "name": "Juan Duran",
+            "location": location,
+            "lastLogged": date,
+            "image": e3,
+            "status": empStatus[3],
+          },
+          {
+            "name": "CJ Ellis",
+            "location": location,
+            "lastLogged": date,
+            "image": e4,
+            "status": empStatus[4],
+          },
+          {
+            "name": "Scotty Fulton",
+            "location": location,
+            "lastLogged": date,
+            "image": e5,
+            "status": empStatus[5],
+          },
+          {
+            "name": "Don Newman",
+            "location": location,
+            "lastLogged": date,
+            "image": e6,
+            "status": empStatus[6],
+          },
+          {
+              "name": "John Phang",
+              "location": location,
+              "lastLogged": date,
+              "image": e7,
+              "status": empStatus[7],
+          },
+            
+          {
+              "name": "Ivan Rincon",
+              "location": location,
+              "lastLogged": date,
+              "image": e8,
+              "status": empStatus[8],
+          },
+          {
+              "name": "Trevor Taylor",
+              "location": location,
+              "lastLogged": date,
+              "image": e9,
+              "status": empStatus[9],
+          }
+      ]
+      
+        this.setState({
+          posts: employees
+        })
+      });
+      }).on("error", (err) => {
+        console.log("Error: " + err.message);
+      });
+    
     }
    
   
@@ -238,8 +241,8 @@ class Button extends React.Component {
     }
 
     serverPost(){
-      console.log(this.props.index, (this.state.status)%2 +1)
-
+      //console.log(this.props.index, (this.state.status)%2 +1)
+      sender(this.props.index,(this.state.status)%2 +1)
     }
   
     render() {
