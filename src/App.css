@@ -1,6 +1,23 @@
 .App {
   /* text-align: center; */
 }
+.Nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  color:white;
+}
+
+li {
+  padding:10px;
+  float: left;  
+}
+
+.whiteLink{
+  color:white
+}
+
 
 .App-header {
   background-color: #282c34;
